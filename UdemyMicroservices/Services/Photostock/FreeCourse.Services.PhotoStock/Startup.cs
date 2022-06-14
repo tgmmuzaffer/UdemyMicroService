@@ -39,7 +39,7 @@ namespace FreeCourse.Services.PhotoStock
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
             {
                 opt.Authority = Configuration["IdentityServerUrl"];//bu microservice e token ? kimin da?itt??? bilgisini veriyoruz 
-                opt.Audience = "photo_stock_catalog";//En:Audience => Tr:?zleyici(gelen token içindeki audience parametresine bak?cak resource_token bilgisi varsa, tamam sen istek yapabilirsin buraya deyip iizn vericek)
+                opt.Audience = "resource_photo_stock";//En:Audience => Tr:?zleyici(gelen token içindeki audience parametresine bak?cak resource_token bilgisi varsa, tamam sen istek yapabilirsin buraya deyip iizn vericek)
                 //api resource bu identity server daki config de
 
                 opt.RequireHttpsMetadata = false;//http protokülü olarak https bekler defaultta o yüzden false verdik
