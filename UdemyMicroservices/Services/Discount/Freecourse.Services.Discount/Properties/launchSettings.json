@@ -4,7 +4,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:36990",
+      "applicationUrl": "http://localhost:56239",
       "sslPort": 0
     }
   },
@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Freecourse.Services.Discount": {
+    "FreeCourse.Services.Discount": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": false,
