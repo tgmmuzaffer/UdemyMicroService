@@ -1,4 +1,5 @@
 Services
+_web=>5010
 -catalogAPI=>5011
 -photoStoackAPI=>5012
 -basketAPI=>5013
@@ -6,3 +7,4 @@ Services
 -orderAPI=>5015
 -fakePaymentAPI=>5016
 -IdenityServer=>5001
+-gateway=>5000

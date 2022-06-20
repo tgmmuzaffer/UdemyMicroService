@@ -20,6 +20,7 @@ namespace FreeCourse.IdentityServer
                 new ApiResource("resource_discount"){Scopes={ "discount_fullpermission" } },
                 new ApiResource("resource_order"){Scopes={ "order_fullpermission" } },
                 new ApiResource("resource_fake_payment"){Scopes={ "fake_payment_fullpermission" } },
+                new ApiResource("resource_gateway"){Scopes={ "gateway_fullpermission" } },
                 new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
             };
         public static IEnumerable<IdentityResource> IdentityResources =>
@@ -40,6 +41,7 @@ namespace FreeCourse.IdentityServer
                 new ApiScope("discount_fullpermission", "Discount Api için tam yetkili erişim."),
                 new ApiScope("order_fullpermission", "Order Api için tam yetkili erişim."),
                 new ApiScope("fake_payment_fullpermission", "Fake_payment Api için tam yetkili erişim."),
+                new ApiScope("gateway_fullpermission", "Gateway Api için tam yetkili erişim."),
                 new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
 
             };
@@ -53,7 +55,7 @@ namespace FreeCourse.IdentityServer
                    ClientId="WebMvcClient",
                    ClientSecrets ={ new Secret("secret".Sha256()) },
                    AllowedGrantTypes = GrantTypes.ClientCredentials,//sabit bir clientıd ve clientsecret olduğundan burada refresh token olmaz. 
-                   AllowedScopes = { "catalog_fullpermission" , "photo_stock_fullpermission", IdentityServerConstants.LocalApi.ScopeName }
+                   AllowedScopes = { "gateway_fullpermission", "catalog_fullpermission" , "photo_stock_fullpermission", IdentityServerConstants.LocalApi.ScopeName }
                },
                 new Client
                {
