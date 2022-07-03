@@ -1,8 +1,12 @@
-﻿using FreeCourse.Shared.Services;
+﻿using FluentValidation.AspNetCore;
+using FreeCourse.Shared.Services;
+using FreeCourse.Web.Extensions;
 using FreeCourse.Web.Handler;
+using FreeCourse.Web.Helpers;
 using FreeCourse.Web.Models;
 using FreeCourse.Web.Services;
 using FreeCourse.Web.Services.Interface;
+using FreeCourse.Web.Validator;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,29 +39,14 @@ namespace FreeCourse.Web
             services.AddHttpContextAccessor();
             //Tokenları cache te tutsabilmek için IdentityModel.MvcCore nugetini ekledik.Cache işlemlerini yapabilmek için DI da geçtik
             services.AddAccessTokenManagement();
-
+            services.AddSingleton<PhotoHelper>();
             services.AddScoped<ISharedIdentityService, SharedIdentityService>();
 
-            var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
+           
             //delegetingHadler dan miras alan Sınıflarımızı DI da gectik
             services.AddScoped<ResorceOwnerPasswordTokenHandler>();
             services.AddScoped<ClientCredentialTokenHandler>();
-            //resourceOwnerPassword akış tipi ile token aldığımız servicelerimiz
-            services.AddHttpClient<IIdentityService, IdentityService>();
-            services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
-            //HttpClient ile yaptığımız isteklerin hepsinde deleget sınıflarımız dinleyerek authorize attributune token ı ekliyor. Ve yapılacak tüm isteklerin base uri ını veriyoruz
-            services.AddHttpClient<IUserService, UserService>(opt =>
-            {
-                opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
-            }).AddHttpMessageHandler<ResorceOwnerPasswordTokenHandler>();
-            services.AddHttpClient<ICatalogService, CatalogService>(opt =>
-            {
-                opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
-            }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
-            services.AddHttpClient<IPhotoStockService, PhotoStockService>(opt =>
-            {
-                opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.PhotoStock.Path}");
-            }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
+            services.AddHttpClientServices(Configuration);
             //Cookie bazli authontication için ayarlamalar
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opt =>
             {
@@ -66,8 +55,12 @@ namespace FreeCourse.Web
                 opt.SlidingExpiration = true;
                 opt.Cookie.Name = "udemywebcookie";
             });
-            services.AddControllersWithViews();
-
+            services.AddControllersWithViews().AddFluentValidation(x =>
+            {
+                //Bir class verip bu classın assembly sine git tüm validatorları tara al
+                x.RegisterValidatorsFromAssemblyContaining<CourseCreateInputValidator>();
+            });
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -80,6 +73,7 @@ namespace FreeCourse.Web
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            
             app.UseStaticFiles();
 
             app.UseRouting();

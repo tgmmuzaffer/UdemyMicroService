@@ -24,17 +24,26 @@ namespace FreeCourse.Services.Order.Application.Handlers
 
         public async Task<Response<CreatedOrderDto>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
-            var newAddress = new Address(request.Address.Province, request.Address.District, request.Address.Street,request.Address.ZipCode, request.Address.Line);
-           Domain.OrderAggregate.Order newOrder = new Domain.OrderAggregate.Order(request.BuyerId, newAddress);
-            request.OrderItems.ForEach(x =>
+            try
             {
-                newOrder.AddOrderItem(x.ProductId, x.PictureUrl, x.Price, x.ProductName);
-            });
+                var newAddress = new Address(request.Address.Province, request.Address.District, request.Address.Street, request.Address.ZipCode, request.Address.Line);
+                Domain.OrderAggregate.Order newOrder = new Domain.OrderAggregate.Order(request.BuyerId, newAddress);
+                request.OrderItems.ForEach(x =>
+                {
+                    newOrder.AddOrderItem(x.ProductId, x.PictureUrl, x.Price, x.ProductName);
+                });
 
-            await _orderDbContext.AddAsync(newOrder);
-            await _orderDbContext.SaveChangesAsync();
+                await _orderDbContext.AddAsync(newOrder);
+                await _orderDbContext.SaveChangesAsync();
 
-            return Response<CreatedOrderDto>.Success(new CreatedOrderDto { OrderId = newOrder.Id }, 200);
+                return Response<CreatedOrderDto>.Success(new CreatedOrderDto { OrderId = newOrder.Id }, 200);
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
+
         }
     }
 }

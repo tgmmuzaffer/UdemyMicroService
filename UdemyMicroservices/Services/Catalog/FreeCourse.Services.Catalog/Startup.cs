@@ -1,5 +1,6 @@
-using FreeCourse.Services.Catalog.Services;
+﻿using FreeCourse.Services.Catalog.Services;
 using FreeCourse.Services.Catalog.Settings;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,7 +31,21 @@ namespace FreeCourse.Services.Catalog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddMassTransit(x =>
+            {
+                //https://hub.docker.com/_/rabbitmq
+                //rabbitMQ default port :5672
+                //rabbitMQ gelen mesajları görebileceğişmiz uı :15672
+                x.UsingRabbitMq((context, cnfg) =>
+                {
+                    cnfg.Host(Configuration["RabbitMQUrl"], "/", host =>
+                    {
+                        host.Username("guest");
+                        host.Password("guest");
+                    });
+                });
+            });
+            services.AddMassTransitHostedService();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICourseService, CourseService>();
             services.AddAutoMapper(typeof(Startup));
@@ -50,8 +65,8 @@ namespace FreeCourse.Services.Catalog
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
             {
                 opt.Authority = Configuration["IdentityServerUrl"];//bu microservice e token ? kimin da?itt??? bilgisini veriyoruz 
-                opt.Audience = "resource_catalog";//En:Audience => Tr:?zleyici(gelen token i�indeki audience parametresine bak?cak resource_token bilgisi varsa, tamam sen istek yapabilirsin buraya deyip iizn vericek)
-                opt.RequireHttpsMetadata = false;//http protok�l� olarak https bekler defaultta o y�zden false verdik
+                opt.Audience = "resource_catalog";//En:Audience => Tr:?zleyici(gelen token içindeki audience parametresine bak?cak resource_token bilgisi varsa, tamam sen istek yapabilirsin buraya deyip iizn vericek)
+                opt.RequireHttpsMetadata = false;//http protokülü olarak https bekler defaultta o yüzden false verdik
 
             });
         }

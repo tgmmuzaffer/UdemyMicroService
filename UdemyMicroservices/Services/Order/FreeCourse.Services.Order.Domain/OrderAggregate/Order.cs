@@ -9,34 +9,41 @@ namespace FreeCourse.Services.Order.Domain.OrderAggregate
 {
     public class Order : Entity, IAggregateRoot
     {
-        public DateTime CreatedDate { get;private set; }
+        public DateTime CreatedDate { get; private set; }
+
         public Address Address { get; private set; }
+
         public string BuyerId { get; private set; }
-        private readonly List<OrderItem> _orderItem;
-        public IReadOnlyCollection<OrderItem> OrderItems=> _orderItem;
+
+        private readonly List<OrderItem> _orderItems;
+
+        public IReadOnlyCollection<OrderItem> OrderItems => _orderItems;
+
         public Order()
         {
-
         }
-        public Order(string buyerid, Address address)
+
+        public Order(string buyerId, Address address)
         {
-            _orderItem = new List<OrderItem>();
+            _orderItems = new List<OrderItem>();
             CreatedDate = DateTime.Now;
-            BuyerId= buyerid;
-            Address= address;
+            BuyerId = buyerId;
+            Address = address;
         }
 
-        public void AddOrderItem(int productId, string productName, decimal price, string pictureUrl)
+        public void AddOrderItem(string productId, string productName, decimal price, string pictureUrl)
         {
-            var existProduct = _orderItem.Any(x => x.ProductId == productId);
+            var existProduct = _orderItems.Any(x => x.ProductId == productId);
+
             if (!existProduct)
             {
-                var newOrdederItem = new OrderItem(productId, productName, pictureUrl, price);
-                _orderItem.Add(newOrdederItem);
+                var newOrderItem = new OrderItem(productId, productName, pictureUrl, price);
+
+                _orderItems.Add(newOrderItem);
             }
         }
 
-        public decimal GetTotalPrice => _orderItem.Sum(x => x.Price);
+        public decimal GetTotalPrice => _orderItems.Sum(x => x.Price);
 
     }
 }

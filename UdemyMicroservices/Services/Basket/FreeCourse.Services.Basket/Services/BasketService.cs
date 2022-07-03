@@ -2,6 +2,8 @@
 using FreeCourse.Shared.Dtos;
 using System.Text.Json;
 using System.Threading.Tasks;
+using FreeCourse.Shared.Messages;
+using System.Collections.Generic;
 
 namespace FreeCourse.Services.Basket.Services
 {
@@ -34,8 +36,19 @@ namespace FreeCourse.Services.Basket.Services
 
         public async Task<Response<bool>> SaveOrUpdate(BasketDto basketDto)
         {
-            var status = await _redisService.GetDb().StringSetAsync(basketDto.UserId, JsonSerializer.Serialize(basketDto));
-            return status ? Response<bool>.Success(204) : Response<bool>.Fail("basket could not update or save", 500);
+            try
+            {
+                var status = await _redisService.GetDb().StringSetAsync(basketDto.UserId, JsonSerializer.Serialize(basketDto));
+               
+                
+                return status ? Response<bool>.Success(204) : Response<bool>.Fail("basket could not update or save", 500);
+            }
+            catch (System.Exception e)
+            {
+
+                throw new System.Exception(e.Message);
+            }
+
         }
     }
 }

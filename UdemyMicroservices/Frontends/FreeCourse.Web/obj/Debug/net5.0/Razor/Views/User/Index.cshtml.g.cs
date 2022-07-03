@@ -33,8 +33,22 @@ using FreeCourse.Web.Models.Catalogs;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 4 "C:\Users\MONSTER\source\repos\UdemyMicroService\UdemyMicroservices\Frontends\FreeCourse.Web\Views\_ViewImports.cshtml"
+using FreeCourse.Web.Models.Baskets;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 5 "C:\Users\MONSTER\source\repos\UdemyMicroService\UdemyMicroservices\Frontends\FreeCourse.Web\Views\_ViewImports.cshtml"
+using FreeCourse.Web.Models.Orders;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"7ebea37faf2fc35acde95593ef0f52c528d67c0f", @"/Views/User/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"71ab55df8d40d5e696fd30e09deceda51797a098", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"85623d792954c03ad3982eaaa0051272c3aa8e14", @"/Views/_ViewImports.cshtml")]
     #nullable restore
     public class Views_User_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<UserVievModel>
     #nullable disable
@@ -110,7 +124,7 @@ using FreeCourse.Web.Models.Catalogs;
 #line hidden
 #nullable disable
             WriteLiteral("</td>\r\n                    </tr>\r\n                </table>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"col-md-3\">\r\n        <div class=\"list-group\">\r\n           \r\n            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7ebea37faf2fc35acde95593ef0f52c528d67c0f6379", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7ebea37faf2fc35acde95593ef0f52c528d67c0f6850", async() => {
                 WriteLiteral("Kurslarım");
             }
             );

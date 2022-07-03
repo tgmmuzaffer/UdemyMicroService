@@ -7,6 +7,10 @@
         public string PhotoStockUri { get; set; }
         public SericeApi Catalog { get; set; }
         public SericeApi PhotoStock { get; set; }
+        public SericeApi Basket { get; set; }
+        public SericeApi Discount { get; set; }
+        public SericeApi Payment { get; set; }
+        public SericeApi Order { get; set; }
     }
 
     public class SericeApi

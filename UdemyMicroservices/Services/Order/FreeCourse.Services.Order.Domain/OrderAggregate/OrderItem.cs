@@ -11,7 +11,7 @@ namespace FreeCourse.Services.Order.Domain.OrderAggregate
     {
       
 
-        public int ProductId { get;private set; }
+        public string ProductId { get;private set; }
         public string ProductName { get; private set; }
         public string PictureUrl { get; private set; }
         public Decimal Price { get; private set; }
@@ -19,7 +19,7 @@ namespace FreeCourse.Services.Order.Domain.OrderAggregate
         {
 
         }
-        public OrderItem(int productId, string productName, string pictureUrl, decimal price)
+        public OrderItem(string productId, string productName, string pictureUrl, decimal price)
         {
             ProductId = productId;
             ProductName = productName;
