@@ -63,9 +63,9 @@
       "UpstreamPathTemplate": "/services/discount/{everything}", //clientın istek yapacagi nokta
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamSchema": "http",
+      "DelegatingHandlers": [ "TokenExchangeDalagetaHandler" ],
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "GatewayAuthenticationSchema",
-        "AllowedScopes": [ "discount_fullpermission" ]
+        "AuthenticationProviderKey": "GatewayAuthenticationSchema"
       }
     },
     {
@@ -97,9 +97,9 @@
       "UpstreamPathTemplate": "/services/fakepayment/{everything}", //clientın istek yapacagi nokta
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamSchema": "http",
+      "DelegatingHandlers": [ "TokenExchangeDalagetaHandler" ],
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "GatewayAuthenticationSchema",
-        "AllowedScopes": [ "fake_payment_fullpermission" ]
+        "AuthenticationProviderKey": "GatewayAuthenticationSchema"
       }
     }
   ],
